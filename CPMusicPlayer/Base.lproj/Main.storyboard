@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
+                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="Hmq-sE-Fgz">
+                                <rect key="frame" x="235" y="540" width="130" height="50"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H7q-Fz-SDG">
+                                        <rect key="frame" x="0.0" y="0.0" width="60" height="50"/>
+                                        <color key="backgroundColor" red="0.19230769230769229" green="0.19230769230769229" blue="0.19230769230769229" alpha="1" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="d1r-8R-lB7"/>
+                                            <constraint firstAttribute="height" constant="50" id="lZZ-Vv-LXs"/>
+                                        </constraints>
+                                        <state key="normal" title="Play" image="play">
+                                            <color key="titleColor" red="0.14793669871794868" green="0.14793669871794868" blue="0.14793669871794868" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="playAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="wm9-wM-tvG"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zhd-Ji-F0j">
+                                        <rect key="frame" x="70" y="0.0" width="60" height="50"/>
+                                        <color key="backgroundColor" red="0.19230769230769229" green="0.19230769230769229" blue="0.19230769230769229" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Stop" image="stop">
+                                            <color key="titleColor" red="0.14793669871794868" green="0.14793669871794868" blue="0.14793669871794868" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="stopAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IbE-aY-lv2"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="Zhd-Ji-F0j" firstAttribute="width" secondItem="H7q-Fz-SDG" secondAttribute="width" id="Zly-38-YdP"/>
+                                    <constraint firstItem="Zhd-Ji-F0j" firstAttribute="height" secondItem="H7q-Fz-SDG" secondAttribute="height" id="qSH-Pc-qPY"/>
+                                </constraints>
+                            </stackView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wwV-Yi-HHI">
+                                <rect key="frame" x="65" y="65" width="470" height="250"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="250" id="cve-cP-tTp"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.20318509615384617" green="0.20318509615384617" blue="0.20318509615384617" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="Hmq-sE-Fgz" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Fae-sG-2xP"/>
+                            <constraint firstItem="wwV-Yi-HHI" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="45" id="KGP-Lt-7zu"/>
+                            <constraint firstItem="wwV-Yi-HHI" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="45" id="Nia-2A-O3p"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Hmq-sE-Fgz" secondAttribute="bottom" constant="10" id="lzt-Oz-3Bs"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="wwV-Yi-HHI" secondAttribute="trailing" constant="45" id="sU9-VN-4eI"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="musicImage" destination="wwV-Yi-HHI" id="Rxc-NQ-Zy6"/>
+                        <outlet property="playStatus" destination="H7q-Fz-SDG" id="5km-An-WPX"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="play" width="230" height="232"/>
+        <image name="stop" width="231" height="230"/>
+    </resources>
+</document>
