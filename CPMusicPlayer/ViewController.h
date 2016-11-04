@@ -13,10 +13,17 @@
 {
     AVAudioPlayer *audioPlayer;
     BOOL isPlaying;
+    NSString *titleOfSong;
+    NSString *artistsOfSong;
+    NSString *albumNamesOfSong;
+    
 }
 
 - (IBAction)playAction:(id)sender;
 - (IBAction)stopAction:(id)sender;
+@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
+@property (strong, nonatomic) IBOutlet UILabel *artistLabel;
+@property (strong, nonatomic) IBOutlet UILabel *albumNameLabel;
 
 @property (strong, nonatomic) IBOutlet UIButton *playStatus;
 @property (strong, nonatomic) IBOutlet UIImageView *musicImage;

@@ -51,11 +51,36 @@
         NSArray *artists = [AVMetadataItem metadataItemsFromArray:asset.commonMetadata withKey:AVMetadataCommonKeyArtist keySpace:AVMetadataKeySpaceCommon];
         NSArray *albumNames = [AVMetadataItem metadataItemsFromArray:asset.commonMetadata withKey:AVMetadataCommonKeyAlbumName keySpace:AVMetadataKeySpaceCommon];
         
-        AVMetadataItem *title = [titles objectAtIndex:0];
-        AVMetadataItem *artist = [artists objectAtIndex:0];
-        AVMetadataItem *albumName = [albumNames objectAtIndex:0];
+//        AVMetadataItem *title = [titles objectAtIndex:0];
+//        AVMetadataItem *artist = [artists objectAtIndex:0];
+//        AVMetadataItem *albumName = [albumNames objectAtIndex:0];
+//    
+    NSArray *metadata = [asset commonMetadata];
+    
+    
+    for (AVMetadataItem *item in metadata) {
+        if ([[item commonKey] isEqualToString:@"title"]) {
+            titleOfSong = (NSString *)[item value];
+        }
         
+        if ([[item commonKey] isEqualToString:@"artist"]) {
+            artistsOfSong = (NSString *)[item value];
+        }
         
+        if ([[item commonKey] isEqualToString:@"albumName"]) {
+            albumNamesOfSong = (NSString *)[item value];
+        }
+    
+   // NSLog(@"title:%@",title);
+//    self.titleLabel.text = [NSString stringWithFormat:@"%@",title];
+//    self.artistLabel.text = [NSString stringWithFormat:@"%@",artist];
+//    self.albumNameLabel.text = [NSString stringWithFormat:@"%@",albumName];
+        
+        self.titleLabel.text =titleOfSong;
+        self.artistLabel.text =artistsOfSong;
+        self.albumNameLabel.text =albumNamesOfSong;
+
+    }
         NSArray *keys = [NSArray arrayWithObjects:@"commonMetadata", nil];
         [asset loadValuesAsynchronouslyForKeys:keys completionHandler:^{
             NSArray *artworks = [AVMetadataItem metadataItemsFromArray:asset.commonMetadata
@@ -150,7 +175,7 @@
     
     [audioPlayer stop];
     isPlaying = false;
-    [self.playStatus setTitle:@"Play" forState:UIControlStateNormal];
+    [self.playStatus setImage:[UIImage imageNamed:@"play.png"] forState:UIControlStateNormal];
     
 }
 @end
