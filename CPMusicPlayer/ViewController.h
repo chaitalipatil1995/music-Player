@@ -16,7 +16,7 @@
     NSString *titleOfSong;
     NSString *artistsOfSong;
     NSString *albumNamesOfSong;
-    
+    NSTimer *timer;
 }
 
 - (IBAction)playAction:(id)sender;
@@ -24,6 +24,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *artistLabel;
 @property (strong, nonatomic) IBOutlet UILabel *albumNameLabel;
+@property (strong, nonatomic) IBOutlet UISlider *sliderDuration;
 
 @property (strong, nonatomic) IBOutlet UIButton *playStatus;
 @property (strong, nonatomic) IBOutlet UIImageView *musicImage;

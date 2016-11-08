@@ -19,11 +19,31 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     isPlaying = false;
+    self.sliderDuration.userInteractionEnabled = YES;
+    self.sliderDuration.minimumValue = 0;
+    self.sliderDuration.value = 0;
+    
+    [self.sliderDuration setThumbImage:[UIImage imageNamed:@"thumb"] forState:UIControlStateNormal];
+
+
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+-(void)initializationOfTimer {
+    timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateDurationOfSlider) userInfo:nil repeats:YES];
+    
+}
+
+-(void)updateDurationOfSlider {
+    
+    if (self.sliderDuration.value == audioPlayer.duration) {
+        timer = nil;
+    }
+    self.sliderDuration.value = audioPlayer.currentTime;
 }
 
 -(BOOL)conditionOfPlayer{
@@ -40,6 +60,9 @@
 
         }
         else{
+            
+            self.sliderDuration.maximumValue = audioPlayer.duration;
+
             Status = true;
         }
     }
@@ -51,10 +74,10 @@
         NSArray *artists = [AVMetadataItem metadataItemsFromArray:asset.commonMetadata withKey:AVMetadataCommonKeyArtist keySpace:AVMetadataKeySpaceCommon];
         NSArray *albumNames = [AVMetadataItem metadataItemsFromArray:asset.commonMetadata withKey:AVMetadataCommonKeyAlbumName keySpace:AVMetadataKeySpaceCommon];
         
-//        AVMetadataItem *title = [titles objectAtIndex:0];
-//        AVMetadataItem *artist = [artists objectAtIndex:0];
-//        AVMetadataItem *albumName = [albumNames objectAtIndex:0];
-//    
+        AVMetadataItem *title = [titles objectAtIndex:0];
+        AVMetadataItem *artist = [artists objectAtIndex:0];
+        AVMetadataItem *albumName = [albumNames objectAtIndex:0];
+    
     NSArray *metadata = [asset commonMetadata];
     
     
@@ -147,10 +170,14 @@
     
         if (isPlaying) {
             [audioPlayer play];
+            [self initializationOfTimer];
+
         }
         else{
             if ([self conditionOfPlayer]) {
                 [audioPlayer play];
+                [self initializationOfTimer];
+
                 isPlaying=true;
             }
             else{
@@ -164,9 +191,10 @@
     else if ([stateButton.currentImage isEqual:[UIImage imageNamed:@"pause.png"]])
 {
         [audioPlayer pause];
-        isPlaying = false;
+    
+        [timer invalidate];
+
         [stateButton setImage:[UIImage imageNamed:@"play.png"] forState:UIControlStateNormal];
-        
     }
 
 }
@@ -175,6 +203,10 @@
     
     [audioPlayer stop];
     isPlaying = false;
+    self.sliderDuration.value = 0;
+    [timer invalidate];
+    timer = nil;
+
     [self.playStatus setImage:[UIImage imageNamed:@"play.png"] forState:UIControlStateNormal];
     
 }
