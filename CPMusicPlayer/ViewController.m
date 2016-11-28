@@ -19,13 +19,17 @@
     // Do any additional setup after loading the view, typically from a nib.
     
     isPlaying = false;
+    
     self.sliderDuration.userInteractionEnabled = YES;
+
     self.sliderDuration.minimumValue = 0;
     self.sliderDuration.value = 0;
-    
+    self.currentTimeLabel.text = @"0.00";
+    self.durationLabel.text = @"0.00";
+
     [self.sliderDuration setThumbImage:[UIImage imageNamed:@"thumb"] forState:UIControlStateNormal];
 
-
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -35,15 +39,29 @@
 
 -(void)initializationOfTimer {
     timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateDurationOfSlider) userInfo:nil repeats:YES];
+    timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(updateCurrentTime) userInfo:nil repeats:YES];
+
+}
+-(void)updateCurrentTime{
+    {
+        NSTimeInterval currentTime = audioPlayer.currentTime;
+        
+        NSInteger minutes = floor(currentTime/60);
+        NSInteger seconds = trunc(currentTime - minutes * 60);
+        
+        // update your UI with currentTime;
+        self.currentTimeLabel.text = [NSString stringWithFormat:@"%ld:%02ld", (long)minutes, (long)seconds];
+    }
     
 }
 
 -(void)updateDurationOfSlider {
-    
+
     if (self.sliderDuration.value == audioPlayer.duration) {
         timer = nil;
     }
     self.sliderDuration.value = audioPlayer.currentTime;
+    
 }
 
 -(BOOL)conditionOfPlayer{
@@ -70,13 +88,13 @@
     
         AVURLAsset *asset = [AVURLAsset URLAssetWithURL:musicFileURl options:nil];
         
-        NSArray *titles = [AVMetadataItem metadataItemsFromArray:asset.commonMetadata withKey:AVMetadataCommonKeyTitle keySpace:AVMetadataKeySpaceCommon];
-        NSArray *artists = [AVMetadataItem metadataItemsFromArray:asset.commonMetadata withKey:AVMetadataCommonKeyArtist keySpace:AVMetadataKeySpaceCommon];
-        NSArray *albumNames = [AVMetadataItem metadataItemsFromArray:asset.commonMetadata withKey:AVMetadataCommonKeyAlbumName keySpace:AVMetadataKeySpaceCommon];
+       // NSArray *titles = [AVMetadataItem metadataItemsFromArray:asset.commonMetadata withKey:AVMetadataCommonKeyTitle keySpace:AVMetadataKeySpaceCommon];
+        //NSArray *artists = [AVMetadataItem metadataItemsFromArray:asset.commonMetadata withKey:AVMetadataCommonKeyArtist keySpace:AVMetadataKeySpaceCommon];
+        //NSArray *albumNames = [AVMetadataItem metadataItemsFromArray:asset.commonMetadata withKey:AVMetadataCommonKeyAlbumName keySpace:AVMetadataKeySpaceCommon];
         
-        AVMetadataItem *title = [titles objectAtIndex:0];
-        AVMetadataItem *artist = [artists objectAtIndex:0];
-        AVMetadataItem *albumName = [albumNames objectAtIndex:0];
+        //AVMetadataItem *title = [titles objectAtIndex:0];
+        //AVMetadataItem *artist = [artists objectAtIndex:0];
+        //AVMetadataItem *albumName = [albumNames objectAtIndex:0];
     
     NSArray *metadata = [asset commonMetadata];
     
@@ -93,11 +111,21 @@
         if ([[item commonKey] isEqualToString:@"albumName"]) {
             albumNamesOfSong = (NSString *)[item value];
         }
+        
+        CMTime audioDuration = asset.duration;
+        float audioDurationSeconds = CMTimeGetSeconds(audioDuration);
+        
+        
+        
+        
+        NSDateComponentsFormatter *componentFormatter = [[NSDateComponentsFormatter alloc] init];
+        
+        componentFormatter.unitsStyle = NSDateComponentsFormatterUnitsStylePositional;
+        componentFormatter.zeroFormattingBehavior = NSDateComponentsFormatterZeroFormattingBehaviorDropAll;
+        NSString *formattedString = [componentFormatter stringFromTimeInterval:audioDurationSeconds];
+        NSLog(@"%@",formattedString);
     
-   // NSLog(@"title:%@",title);
-//    self.titleLabel.text = [NSString stringWithFormat:@"%@",title];
-//    self.artistLabel.text = [NSString stringWithFormat:@"%@",artist];
-//    self.albumNameLabel.text = [NSString stringWithFormat:@"%@",albumName];
+        self.durationLabel.text =[NSString stringWithFormat:@"%@",formattedString];
         
         self.titleLabel.text =titleOfSong;
         self.artistLabel.text =artistsOfSong;
@@ -112,7 +140,6 @@
             
             for (AVMetadataItem *item in artworks) {
                 if ([item.keySpace isEqualToString:AVMetadataKeySpaceID3]) {
-                   // NSDictionary *d = [item.value copyWithZone:nil];
                     
                     NSData *data = [item.value copyWithZone:nil];
                     UIImage *image = [UIImage imageWithData:data];

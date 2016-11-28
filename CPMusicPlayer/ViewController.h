@@ -18,6 +18,8 @@
     NSString *albumNamesOfSong;
     NSTimer *timer;
 }
+@property (strong, nonatomic) IBOutlet UILabel *currentTimeLabel;
+@property (strong, nonatomic) IBOutlet UILabel *durationLabel;
 
 - (IBAction)playAction:(id)sender;
 - (IBAction)stopAction:(id)sender;
